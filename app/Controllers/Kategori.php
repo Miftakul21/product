@@ -48,7 +48,7 @@ class Kategori extends BaseController
                 'success' => false, 
                 'message' => 'Input request not valid', 
                 "error" => $this->validator->getErrors() 
-            ])->setStatusCode(400);
+            ]);
         }
 
         $data = ['nama_kategori' => $this->request->getVar('nama_kategori')];
@@ -58,7 +58,7 @@ class Kategori extends BaseController
             return $this->respond(['success' => true, 'message' => 'Berhasil create data']);
         }
 
-        return $this->respond([ 'success' => false, 'message' => 'Gagal create data'])->setStatusCode(400);
+        return $this->respond(['success' => false, 'message' => 'Gagal create data'])->setStatusCode(400);
     }
     
     public function show($id = null) 
@@ -90,7 +90,10 @@ class Kategori extends BaseController
         $kategori = $this->model->where('id_kategori', $id)->findAll();
 
         if(!$kategori) {
-            return $this->respond(['success' => false, 'message' => 'Data not found!'])->setStatusCode(404);
+            return $this->respond([
+                'success' => false, 
+                'message' => 'Data not found!' 
+                ]);
         }
 
         $data = $this->request->getRawInput();

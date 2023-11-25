@@ -41,7 +41,11 @@ class Status extends BaseController
         $rules = ['nama_status' => ['rules' => 'required'],];
 
         if(! $this->validate($rules)) {
-            return $this->respond(['success' => false, 'message' => 'Input request not valid', "error" => $this->validator->getErrors()]);
+            return $this->respond([
+                'success' => false, 
+                'message' => 'Input request not valid', 
+                "error" => $this->validator->getErrors() 
+            ]);
         }
 
         $data = ['nama_status' => $this->request->getVar('nama_status')];
@@ -79,7 +83,10 @@ class Status extends BaseController
         $status = $this->model->where('id_status', $id)->findAll();
 
         if(!$status) {
-            return $this->respond(['success' => false, 'message' => 'Data not found!'])->setStatusCode(404);
+            return $this->respond([
+                'success' => false, 
+                'message' => 'Data not found!' 
+            ]);
         }
 
         $data = $this->request->getRawInput();
@@ -90,7 +97,7 @@ class Status extends BaseController
                 'success' => false, 
                 'message' => 'Input request not valid', 
                 "error" => $this->validator->getErrors()
-            ])->setStatusCode(400);
+            ]);
         }
 
         $request_data = [

@@ -26,7 +26,7 @@
     <!-- Main Content -->
     <main class="container mt-5">
         <div class="row">
-            <div class="col-6">
+            <div class="col-lg-6 col-sm-12">
                 <div class="card shadow">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5>Data Produk</h5>
@@ -36,7 +36,6 @@
                                 data-bs-target="#tambahProduk">Tambah Data
                             </button>
                             <select class="form-control" name="" id="selected-status-produk">
-                                <option value="" selected>Cari status produk</option>
                             </select>
                         </div>
                     </div>
@@ -59,9 +58,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-lg-6 col-sm-12">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-lg-6 col-sm-12">
                         <div class="card shadow">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5>Data Kategori</h5>
@@ -85,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-6">
+                    <div class="col-lg-6 col-sm-12">
                         <div class="card shadow">
                             <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5>Data Status</h5>
@@ -129,25 +128,25 @@
                             <label for="produk" class="form-label">Produk</label>
                             <input type="text" class="form-control" id="produk" name="nama_produk"
                                 placeholder="Masukkan produk">
-                            <div id="error-produk" class="form-text text-danger"></div>
+                            <div class="form-text text-danger error-produk"></div>
                         </div>
                         <div class="mb-3">
                             <label for="harga" class="form-label">Harga</label>
                             <input type="number" class="form-control" id="harga" name="harga"
                                 placeholder="Masukkan Harga">
-                            <div id="error-harga" class="form-text text-danger"></div>
+                            <div class="form-text text-danger error-harga"></div>
                         </div>
                         <div class="mb-3">
                             <label for="select-kategori" class="form-label">Kategori</label>
                             <select class="form-select" name="kategori_id" id="select-kategori">
                             </select>
-                            <div id="error-kategori" class="form-text text-danger"></div>
+                            <div class="form-text text-danger error-kategori"></div>
                         </div>
                         <div class="mb-3">
                             <label for="select-status" class="form-label">Status Produk</label>
                             <select class="form-select" name="status_id" id="select-status">
                             </select>
-                            <div id="error-status" class="form-text text-danger"></div>
+                            <div class="form-text text-danger error-status"></div>
                         </div>
                         <div class="d-flex justify-content-end align-items-center">
                             <button type="submit" class="btn btn-primary">Save</button>
@@ -272,7 +271,7 @@
                             <div class="form-text text-danger error-status"></div>
                         </div>
                         <div class="d-flex justify-content-end align-items-center">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </div>
                     </form>
                 </div>
@@ -318,27 +317,29 @@
         /**
          *  Produk Request (Get, Post Put, Delete)
          */
+        getProduk()
 
-        // Search status produk
-        $('#selected-status-produk').change(function() {
-            let valueOption = $(this).find('option:selected');
-            let params = valueOption.val();
+        function getProduk() {
+            // Search status produk
+            $('#selected-status-produk').change(function() {
+                let valueOption = $(this).find('option:selected');
+                let params = valueOption.val();
 
-            if (params == '') {
-                getProduk()
-            } else {
-                $.ajax({
-                    url: '<?= base_url('data') ?>/' + params,
-                    type: 'GET',
-                    dataType: 'JSON',
-                    success: (res) => {
-                        if (res.success) {
-                            let html = '';
+                if (params == '') {
+                    getProduk()
+                } else {
+                    $.ajax({
+                        url: '<?= base_url('data') ?>/' + params,
+                        type: 'GET',
+                        dataType: 'JSON',
+                        success: (res) => {
+                            if (res.success) {
+                                let html = '';
 
-                            $('#data-produk').html();
-                            $('#data-produk').empty();
-                            for (let i = 0; i < res.data.length; i++) {
-                                html = `<tr>
+                                $('#data-produk').empty();
+                                $('#data-produk').html();
+                                for (let i = 0; i < res.data.length; i++) {
+                                    html = `<tr>
                                         <th scope="row">${i + 1}</th>
                                         <td>${res.data[i].produk}</td>
                                         <td>${res.data[i].produk_harga}</td>
@@ -359,20 +360,18 @@
                                             </button>
                                         </td>
                                     </tr>`
-                                $('#data-produk').append(html);
+                                    $('#data-produk').append(html);
+                                }
                             }
+                        },
+                        error: (res) => {
+                            $('#data-produk').empty();
+                            $('#data-produk').html();
                         }
-                    },
-                    error: (res) => {
-                        console.log(JSON.stringify(res));
-                    }
-                })
-            }
-        })
+                    })
+                }
+            })
 
-        getProduk()
-
-        function getProduk() {
             $.ajax({
                 url: '<?= base_url('produk') ?>',
                 type: 'GET',
@@ -408,6 +407,10 @@
                             $('#data-produk').append(html);
                         }
                     }
+                },
+                error: (res) => {
+                    $('#data-produk').empty();
+                    $('#data-produk').html();
                 }
             })
         }
@@ -439,23 +442,22 @@
                         $('#select-kategori').val(null);
                         $('#select-status').val(null);
 
-                        $('#error-produk').html('')
-                        $('#error-harga').html('')
-                        $('#error-kategori').html('')
-                        $('#error-status').html('')
+                        $('.error-produk').html('')
+                        $('.error-harga').html('')
+                        $('.error-kategori').html('')
+                        $('.error-status').html('')
 
                         getProduk()
                     } else {
-                        $('#error-produk').html('')
-                        $('#error-harga').html('')
-                        $('#error-kategori').html('')
-                        $('#error-status').html('')
-
+                        $('.error-produk').html('')
+                        $('.error-harga').html('')
+                        $('.error-kategori').html('')
+                        $('.error-status').html('')
                         // validasi input
-                        $('#error-produk').html(res.error.nama_produk)
-                        $('#error-harga').html(res.error.harga)
-                        $('#error-kategori').html(res.error.kategori_id)
-                        $('#error-status').html(res.error.status_id)
+                        $('.error-produk').html(res.error.nama_produk)
+                        $('.error-harga').html(res.error.harga)
+                        $('.error-kategori').html(res.error.kategori_id)
+                        $('.error-status').html(res.error.status_id)
                     }
                 },
                 error: (res) => {
@@ -562,7 +564,6 @@
                         $('#error-kategori-edit').html('')
                         $('#error-status-edit').html('')
 
-                        console.log(res)
                         // validasi input
                         $('#error-produk-edit').html(res.error.nama_produk)
                         $('#error-harga-edit').html(res.error.harga)
@@ -619,7 +620,6 @@
         /**
          * Kategori Request (Get, Post, Put, Delete)
          */
-
         getKategori()
 
         function getKategori() {
@@ -632,8 +632,10 @@
                         let html = '';
                         let selectOption = '';
 
+                        $('#data-kategori').empty();
                         $('#data-kategori').html('');
-                        $('#select-kategori').append('');
+                        $('#select-kategori').empty();
+                        $('#select-kategori').html('');
 
                         $('#select-kategori').append(`<option value="">Pilih Kategori</option>`);
                         for (let i = 0; i < res.data.length; i++) {
@@ -664,6 +666,13 @@
                             $('#select-kategori').append(selectOption);
                         }
                     }
+                },
+                error: (res) => {
+                    $('#data-kategori').empty('');
+                    $('#data-kategori').html('');
+                    $('#select-kategori').empty();
+                    $('#select-kategori').html('');
+                    $('#select-kategori').append(`<option selected>Pilih Kategori</option>`)
                 }
             })
         }
@@ -821,7 +830,14 @@
                         let html = '';
                         let selectOption = '';
 
+                        $('#data-status').empty();
                         $('#data-status').html('');
+                        $('#selected-status-produk').empty();
+                        $('#selected-status-produk').html('');
+                        $('#select-status').empty();
+                        $('#select-status').html('');
+                        $('#selected-status-produk').append(
+                            `<option selected value="">Cari status produk</option>`);
                         $('#select-status').append(
                             `<option value="">Pilih Status</option>`);
                         for (let i = 0; i < res.data.length; i++) {
@@ -853,6 +869,17 @@
                             $('#select-status').append(selectOption);
                         }
                     }
+                },
+                error: (res) => {
+                    $('#data-status').empty();
+                    $('#data-status').html('');
+                    $('#selected-status-produk').empty();
+                    $('#selected-status-produk').html('');
+                    $('#selected-status-produk').append(
+                        `<option selected>Cari status produk</option>`)
+                    $('#select-status').empty();
+                    $('#select-status').html('');
+                    $('#select-status').append(`<option selected>Pilih Status</option>`);
                 }
             })
         }
@@ -948,7 +975,6 @@
         // Delete Status
         $('#data-status').on('click', '.btn-delete-status', function() {
             let id = $(this).data('id')
-
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",

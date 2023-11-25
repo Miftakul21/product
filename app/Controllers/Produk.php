@@ -88,7 +88,7 @@ class Produk extends BaseController
                 'success' => false, 
                 'message' => 'Input request not valid', 
                 "error" => $this->validator->getErrors()
-            ])->setStatusCode(400);
+            ]);
         }
 
         $data = [
@@ -154,7 +154,7 @@ class Produk extends BaseController
                 'success' => false, 
                 'message' => 'Input request not valid', 
                 "error" => $this->validator->getErrors()
-            ])->setStatusCode(400);
+            ]);
         }
 
         $request_data = [

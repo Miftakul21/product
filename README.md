@@ -4,7 +4,7 @@ Program membuat Rest API Produk dengan Codeigniter 4
 
 ## Demo Program
 
-![App Screenshot](/public/assets/image/hasi_demo.jpg)
+![App Screenshot](/public/assets/image/hasil_program.jpg)
 
 ## Requirement
 

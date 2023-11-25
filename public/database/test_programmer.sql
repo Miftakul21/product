@@ -237,9 +237,12 @@ ALTER TABLE ONLY public.users ALTER COLUMN id_user SET DEFAULT nextval('public.u
 --
 
 COPY public.kategori (id_kategori, nama_kategori) FROM stdin;
-2	Buah
-13	Sayuran 123
-14	test
+19	L QUEENLY
+20	L MTH AKSESORIS (IM)
+22	L MTH TABUNG (LK)
+23	SP MTH SPAREPART (LK)
+24	CI MTH TINTA LAIN (IM)
+25	S MTH STEMPEL (IM)
 \.
 
 
@@ -248,9 +251,17 @@ COPY public.kategori (id_kategori, nama_kategori) FROM stdin;
 --
 
 COPY public.produk (id_produk, nama_produk, harga, kategori_id, status_id) FROM stdin;
-22	Jeruk Bali	100	2	1
-11	Serikaya 123	6000	2	5
-4	Rambutan	1000	2	1
+29	ALCOHOL GEL POLISH CLEANSER GP-CLN01	12500	19	24
+30	ALUMUNIUM FOIL ALL IN ONE BULAT 23mm IM	1000	20	24
+31	ALUMUNIUM FOIL ALL IN ONE BULAT 30mm IM	1000	20	24
+32	ALUMUNIUM FOIL HDPE/PE BULAT 23mm IM	12500	20	24
+33	ALUMUNIUM FOIL HDPE/PE BULAT 30mm IM	1000	20	24
+35	ALUMUNIUM FOIL PET SHEET 250mm IM	1000	20	26
+36	ARM PENDEK MODEL U	3000	20	24
+37	ARM SUPPORT KECIL	13000	22	26
+38	ARM SUPPORT KOTAK PUTIH	13000	20	26
+34	ALUMUNIUM FOIL HDPE/PE SHEET 250mm IM	13000	20	26
+39	ARM SUPPORT PENDEK POLOS	13000	22	24
 \.
 
 
@@ -259,8 +270,8 @@ COPY public.produk (id_produk, nama_produk, harga, kategori_id, status_id) FROM 
 --
 
 COPY public.status (id_status, nama_status) FROM stdin;
-1	Kosong
-5	Bisa dijual
+24	Bisa dijual
+26	Tidak bisa dijual
 \.
 
 
@@ -287,21 +298,21 @@ COPY public.users (id_user, nama, email, password, role) FROM stdin;
 -- Name: kategori_id_kategori_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.kategori_id_kategori_seq', 14, true);
+SELECT pg_catalog.setval('public.kategori_id_kategori_seq', 26, true);
 
 
 --
 -- Name: product_id_produk_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.product_id_produk_seq', 22, true);
+SELECT pg_catalog.setval('public.product_id_produk_seq', 39, true);
 
 
 --
 -- Name: status_id_status_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.status_id_status_seq', 11, true);
+SELECT pg_catalog.setval('public.status_id_status_seq', 26, true);
 
 
 --
